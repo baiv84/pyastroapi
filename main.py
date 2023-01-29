@@ -27,7 +27,7 @@ def get_photo_urls(id_launch):
     return photo_urls
 
 
-def get_last_launche_photos():
+def fetch_spacex_last_launch():
     """Return last launch photo URLs"""
     api_link = 'https://api.spacexdata.com/v5/launches/'
     response = requests.get(api_link)
@@ -55,7 +55,7 @@ def get_last_launche_photos():
 
 if __name__ == '__main__':
     load_dotenv()
-    photo_urls = get_last_launche_photos()
-    for url in photo_urls:
-        file_name = url.split('/')[-1]
+    photo_urls = fetch_spacex_last_launch()
+    for i, url in enumerate(photo_urls):
+        file_name = f'spacex_{i}.jpg'
         download_image(url, file_name)
