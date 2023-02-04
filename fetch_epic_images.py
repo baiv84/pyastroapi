@@ -20,7 +20,7 @@ def get_epic_photos():
         epic_link = f"https://api.nasa.gov/EPIC/archive/natural/{photo_date}/png/{photo_identifier}.png?api_key=Q8XtfftJgPfexGIjh8MZ1MBFKC0umQiuutWSUHCV"
 
         file_name = f'nasa_epic_{i}.png'
-        download_image(epic_link, 'NASA_EPIC', file_name, 'Grabbing EPIC')
+        download_image(epic_link, 'IMAGE_FOLDER', file_name, 'Grabbing EPIC')
 
 
 load_dotenv()

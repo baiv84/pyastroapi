@@ -19,10 +19,10 @@ def nasa_get_photos(count=None):
         for i, photo in enumerate(photos):
             ext = get_file_extension(photo)
             file_name = f'nasa_apod_{i}{ext}'
-            download_image(photo, 'NASA_FOLDER', file_name, 'Grabbing NASA')
+            download_image(photo, 'IMAGE_FOLDER', file_name, 'Grabbing NASA')
     else:
         photo = apods['url']
-        download_image(photo, 'NASA_FOLDER', 'apod.jpg', 'Grabbing NASA')
+        download_image(photo, 'IMAGE_FOLDER', 'apod.jpg', 'Grabbing NASA')
 
 
 load_dotenv()

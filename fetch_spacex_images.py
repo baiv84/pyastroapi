@@ -52,7 +52,7 @@ def spacex_get_photos(launch_id=None):
 
     for i, url in enumerate(photo_urls):
         file_name = f'spacex_{i}.jpg'
-        download_image(url, 'SPACEX_FOLDER', file_name, 'Grabbing SpaseX')
+        download_image(url, 'IMAGE_FOLDER', file_name, 'Grabbing SpaseX')
 
 
 load_dotenv()

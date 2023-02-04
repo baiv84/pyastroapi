@@ -8,9 +8,5 @@ venv
 venv/
 .env
 *.jpeg
-photos_spacex
-photos_spacex/
-photos_nasa
-photos_nasa/
-photos_epic
-photos_epic/
+images
+images/

@@ -10,7 +10,8 @@ COMMANDS = [
 ]
 
 
-if __name__ == '__main__':
-    send_photo_to_channel('photos_nasa/nasa_apod_8.gif', 'Фото дня')
+if __name__ == '__main__':   
     # for command in COMMANDS:
     #     os.system(command)
+    
+    send_photo_to_channel('images/nasa_epic_0.png', ' Планета Земля!')
