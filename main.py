@@ -1,12 +1,15 @@
-from random import randint
-from dotenv import load_dotenv
-from sources.spacex import spacex_get_last_launch_photos
-from sources.nasa import nasa_get_pictures
-from sources.nasa import nasa_get_epic
+import os
+
+
+COMMANDS = [
+    'python3 fetch_spacex_images.py',
+    'python3 fetch_spacex_images.py --launch_id=6243adcaaf52800c6e919254',
+    'python3 fetch_nasa_images.py',
+    'python3 fetch_nasa_images.py --count 10',
+    'python3 fetch_epic_images.py',
+]
 
 
 if __name__ == '__main__':
-    load_dotenv()
-    spacex_get_last_launch_photos()
-    nasa_get_pictures(randint(30, 50))
-    nasa_get_epic()
+    for command in COMMANDS:
+        os.system(command)

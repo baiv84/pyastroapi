@@ -1,18 +1,20 @@
 import requests
+import argparse
 from datetime import datetime
-from common.basicfunc import download_image
+from dotenv import load_dotenv
+from basic import download_image
 
 
-def get_photo_urls(id_launch):
+def get_photo_urls(launch_id):
     """Get photo URLs of launch with particular <id>"""
-    api_link = f'https://api.spacexdata.com/v5/launches/{id_launch}'
+    api_link = f'https://api.spacexdata.com/v5/launches/{launch_id}'
     response = requests.get(api_link)
     response.raise_for_status()
     photo_urls = response.json()['links']['flickr']['original']
     return photo_urls
 
 
-def fetch_spacex_last_launch():
+def fetch_spacex_last_launch_urls():
     """Return last launch photo URLs"""
     api_link = 'https://api.spacexdata.com/v5/launches/'
     response = requests.get(api_link)
@@ -38,9 +40,26 @@ def fetch_spacex_last_launch():
     return []
 
 
-def spacex_get_last_launch_photos():
-    """Download last launch photos"""
-    photo_urls = fetch_spacex_last_launch()
+def spacex_get_photos(launch_id=None):
+    """Download SpaceX launch photos"""
+    try:
+        if not launch_id:
+            photo_urls = fetch_spacex_last_launch_urls()
+        else:
+            photo_urls = get_photo_urls(launch_id)
+    except requests.HTTPError:
+        photo_urls = []
+
     for i, url in enumerate(photo_urls):
         file_name = f'spacex_{i}.jpg'
         download_image(url, 'SPACEX_FOLDER', file_name, 'Grabbing SpaseX')
+
+
+load_dotenv()
+parser = argparse.ArgumentParser(
+    description='Space photo grabber'
+)
+
+parser.add_argument('--launch_id', help='Launch ID')
+args = parser.parse_args()
+spacex_get_photos(args.launch_id)

@@ -1,4 +1,4 @@
-from common.basicfunc import get_file_extension
+from basic import get_file_extension
 
 
 def test_filename_extraction():
