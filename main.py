@@ -1,5 +1,5 @@
 import os
-
+from astro24bot import send_photo_to_channel
 
 COMMANDS = [
     'python3 fetch_spacex_images.py',
@@ -11,5 +11,6 @@ COMMANDS = [
 
 
 if __name__ == '__main__':
-    for command in COMMANDS:
-        os.system(command)
+    send_photo_to_channel('photos_nasa/nasa_apod_8.gif', 'Фото дня')
+    # for command in COMMANDS:
+    #     os.system(command)
