@@ -43,4 +43,4 @@ def spacex_get_last_launch_photos():
     photo_urls = fetch_spacex_last_launch()
     for i, url in enumerate(photo_urls):
         file_name = f'spacex_{i}.jpg'
-        download_image(url, file_name)
+        download_image(url, 'SPACEX_FOLDER', file_name, 'Grabbing SpaseX')
