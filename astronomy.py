@@ -7,6 +7,8 @@ from astro24bot import send_photo_to_channel
 
 
 load_dotenv()
+absFilePath = os.path.abspath(__file__)
+os.chdir(os.path.dirname(absFilePath))
 
 
 INIT_COMMANDS = [
@@ -51,7 +53,7 @@ def initialize_image_folder():
 
 while True:
     if len(PHOTOS) == 0:
-        print("Initialize photo folder...")
+        print('Initialize photo folder...')
         initialize_image_folder()
     else:
         random.shuffle(PHOTOS)

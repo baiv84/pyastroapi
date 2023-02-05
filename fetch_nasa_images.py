@@ -5,12 +5,21 @@ from dotenv import load_dotenv
 from basic import download_image, get_file_extension
 
 
+load_dotenv()
+absFilePath = os.path.abspath(__file__)
+os.chdir(os.path.dirname(absFilePath))
+
+
 def nasa_get_photos(count=None):
     """Download <count> NASA photos of the day"""
     nasa_token = os.environ['NASA_TOKEN']
     apod_url = f'https://api.nasa.gov/planetary/apod/'
 
-    response = requests.get(apod_url, params={'api_key': nasa_token, 'count': count})
+    response = requests.get(
+        apod_url,
+        params={'api_key': nasa_token, 'count': count}
+    )
+
     response.raise_for_status()
     apods = response.json()
 
@@ -25,7 +34,6 @@ def nasa_get_photos(count=None):
         download_image(photo, 'IMAGE_FOLDER', 'apod.jpg', 'Grabbing NASA')
 
 
-load_dotenv()
 parser = argparse.ArgumentParser(
     description='Space photo grabber'
 )

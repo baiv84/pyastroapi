@@ -1,8 +1,14 @@
+import os
 import requests
 import argparse
 from datetime import datetime
 from dotenv import load_dotenv
 from basic import download_image
+
+
+load_dotenv()
+absFilePath = os.path.abspath(__file__)
+os.chdir(os.path.dirname(absFilePath))
 
 
 def get_photo_urls(launch_id):
@@ -55,7 +61,6 @@ def spacex_get_photos(launch_id=None):
         download_image(url, 'IMAGE_FOLDER', file_name, 'Grabbing SpaseX')
 
 
-load_dotenv()
 parser = argparse.ArgumentParser(
     description='Space photo grabber'
 )

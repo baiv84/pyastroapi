@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 def send_photo_to_channel(photo=None, text=None):
     """Send photo with message to channel"""
     load_dotenv()
+    absFilePath = os.path.abspath(__file__)
+    os.chdir(os.path.dirname(absFilePath))
+
     image_folder = os.environ['IMAGE_FOLDER']
     telegram_token = os.environ['TELEGRAM_TOKEN']
     bot = telegram.Bot(token=telegram_token)
