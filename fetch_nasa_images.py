@@ -15,7 +15,7 @@ def nasa_get_photos(count=None):
     apods = response.json()
 
     if count:
-        photos = [apod['url'] for apod in apods if apod['media_type'] != 'video']
+        photos = [apod['url'] for apod in apods if apod['media_type'] == 'image']
         for i, photo in enumerate(photos):
             ext = get_file_extension(photo)
             file_name = f'nasa_apod_{i}{ext}'

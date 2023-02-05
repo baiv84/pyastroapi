@@ -42,10 +42,11 @@ def initialize_image_folder():
     """Initialize images folder"""
     global PHOTOS
     global INIT_COMMANDS
+    global IMAGES_FOLDER
 
     for cmd in INIT_COMMANDS:
         os.system(cmd)
-    PHOTOS = [f'images/{fname}' for fname in os.listdir(IMAGES_FOLDER)]
+    PHOTOS = [f'{IMAGES_FOLDER}/{fname}' for fname in os.listdir(IMAGES_FOLDER)]
 
 
 while True:
