@@ -28,7 +28,7 @@ def get_epic_photos(image_folder='images',nasa_token=None):
 
 def main():
     """Program entry point"""
-    load_dotenv()
+    #load_dotenv()
     absFilePath = os.path.abspath(__file__)
     os.chdir(os.path.dirname(absFilePath))
 
