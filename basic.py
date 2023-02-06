@@ -10,9 +10,8 @@ def download_image(url, folder_name, filename, echo):
     response = requests.get(url)
     response.raise_for_status()
 
-    folder = os.environ[folder_name]
-    pathlib.Path(folder).mkdir(parents=True, exist_ok=True)
-    full_path = f'{folder}/{filename}'
+    pathlib.Path(folder_name).mkdir(parents=True, exist_ok=True)
+    full_path = f'{folder_name}/{filename}'
     with open(full_path, 'wb') as file:
         file.write(response.content)
 
