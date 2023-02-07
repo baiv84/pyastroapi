@@ -1,25 +1,22 @@
 import os
 import random
 import telegram
-from dotenv import load_dotenv
 
 
-def send_photo_to_channel(photo=None, text=None):
+def send_photo_to_channel(channel_name, telegram_token, image_folder, photo=None, text=None):
     """Send photo with message to channel"""
-    load_dotenv()
     absFilePath = os.path.abspath(__file__)
     os.chdir(os.path.dirname(absFilePath))
-
-    image_folder = os.environ['IMAGE_FOLDER']
-    telegram_token = os.environ['TELEGRAM_TOKEN']
     bot = telegram.Bot(token=telegram_token)
 
     if text:
-        bot.send_message(chat_id='@astro24channel', text=text)
+        bot.send_message(chat_id=channel_name, text=text)
 
     if not photo:
-        photos = os.listdir(image_folder)
-        photo = random.choice(photos)
+        photo_files = os.listdir(image_folder)
+        photo = random.choice(photo_files)
         photo = f'{image_folder}/{photo}'
 
-    bot.send_document(chat_id='@astro24channel', document=open(photo, 'rb'))
+    print(f'\n************************************\nSending file  - {photo}')
+    with open(photo, 'rb') as photo_file:
+        bot.send_document(chat_id=channel_name, document=photo_file)

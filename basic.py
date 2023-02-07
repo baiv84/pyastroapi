@@ -4,14 +4,14 @@ import requests
 from urllib.parse import urlsplit, unquote
 
 
-def download_image(url, folder_name, filename, echo):
+def download_image(url, folder, filename, params={}):
     """Download image via URL link to the folder"""
-    print(f'{echo} - {url}')
-    response = requests.get(url)
+    print(f'Download file - {filename}')
+    response = requests.get(url, params=params)
     response.raise_for_status()
 
-    pathlib.Path(folder_name).mkdir(parents=True, exist_ok=True)
-    full_path = f'{folder_name}/{filename}'
+    pathlib.Path(folder).mkdir(parents=True, exist_ok=True)
+    full_path = f'{folder}/{filename}'
     with open(full_path, 'wb') as file:
         file.write(response.content)
 
