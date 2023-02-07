@@ -17,18 +17,18 @@ def get_nasa_photos(nasa_token, folder='images', count=None):
     )
 
     response.raise_for_status()
-    apods = response.json()
-    
+    apod_photos = response.json()
+
     if not count:
-        photo_url = apods['url']
-        download_image(photo_url, folder, 'apod.jpg')
+        apod_photo_url = apod_photos['url']
+        download_image(apod_photo_url, folder, 'apod.jpg')
     else:
-        photo_urls = [apod['url'] for apod in apods if apod['media_type'] == 'image']
-        for i, photo_url in enumerate(photo_urls):
-            ext = get_file_extension(photo_url)
-            filename = f'nasa_apod_{i}{ext}'
-            download_image(photo_url, folder, filename)
-    
+        apod_photo_urls = [apod_photo['url'] for apod_photo in apod_photos if apod_photo['media_type'] == 'image']
+        for index, apod_photo_url in enumerate(apod_photo_urls):
+            apod_file_ext = get_file_extension(apod_photo_url)
+            apod_file_name = f'nasa_apod_{index}{apod_file_ext}'
+            download_image(apod_photo_url, folder, apod_file_name)
+
 
 def main():
     """Program entry point"""

@@ -10,15 +10,14 @@ from fetch_spacex_images import get_spacex_photos
 
 
 def initialize_image_folder(nasa_token, image_folder):
-    """Initialize images folder"""    
+    """Initialize images folder"""
     get_spacex_photos()
-    get_spacex_photos(launch_id='5eb87ce6ffd86e000604b33a')
     get_nasa_photos(nasa_token=nasa_token, folder=image_folder)
     get_nasa_photos(nasa_token=nasa_token, folder=image_folder, count=10)
-    #get_epic_photos(nasa_token=nasa_token, folder=image_folder)
+    get_epic_photos(nasa_token=nasa_token, folder=image_folder)
 
-    photos = [f'{image_folder}/{fname}' for fname in os.listdir(image_folder)]
-    return photos
+    astro_photos = [f'{image_folder}/{fname}' for fname in os.listdir(image_folder)]
+    return astro_photos
 
 
 def main():
@@ -27,13 +26,19 @@ def main():
     absFilePath = os.path.abspath(__file__)
     os.chdir(os.path.dirname(absFilePath))
 
-    image_folder = os.environ['IMAGE_FOLDER']
-    nasa_token = os.environ['NASA_TOKEN']
-    telegram_token = os.environ['TELEGRAM_TOKEN']
-    update_period = os.environ['UPDATE_PERIOD']
-    channel_name = os.environ['CHAT_ID']
-    
-    photos = []
+    try:
+        image_folder = os.environ['IMAGE_FOLDER']
+        nasa_token = os.environ['NASA_TOKEN']
+        telegram_token = os.environ['TELEGRAM_TOKEN']
+        update_period = os.environ['UPDATE_PERIOD']
+        chat_id = os.environ['CHAT_ID']
+    except KeyError:
+        print('\n*******************************\n'
+              'Error loading program settings.\n'
+              'Check .env file for correctness\n')
+        return
+
+    astro_photos = []
 
     parser = argparse.ArgumentParser(
         description='Space photo grabber'
@@ -44,13 +49,13 @@ def main():
     update_period = int(args.period) * 3600
 
     while True:
-        if len(photos) == 0:
+        if len(astro_photos) == 0:
             print('Initialize photo folder...')
-            photos = initialize_image_folder(nasa_token, image_folder)
+            astro_photos = initialize_image_folder(nasa_token, image_folder)
         else:
-            random.shuffle(photos)
-            photo = photos.pop()
-            send_photo_to_channel(channel_name, telegram_token, image_folder, photo)
+            random.shuffle(astro_photos)
+            astro_photo = astro_photos.pop()
+            send_photo_to_channel(chat_id, telegram_token, image_folder, astro_photo)
             print('\n************************************')
             print('Waiting for the next start...')
             time.sleep(update_period)

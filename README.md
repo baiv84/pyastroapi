@@ -22,6 +22,7 @@ It should include such fields:
 + IMAGE_FOLDER=
 + NASA_TOKEN=
 + TELEGRAM_TOKEN=
++ CHAT_ID=
 + UPDATE_PERIOD=
 
 `IMAGE_FOLDER` - photo storage folder name. It has to be in current scripts home directory.
@@ -29,6 +30,8 @@ It should include such fields:
 `NASA_TOKEN` - access token for NASA services
 
 `TELEGRAM_TOKEN` - access token for Telegram services
+
+`CHAT_ID` - Telegram channel name to publish photos
 
 `UPDATE_PERIOD` - period of time between photo publishing in the channel
 
@@ -83,13 +86,13 @@ Main idea - put functions into separate file to re-use  them in our projects
 By default - script downloads only 1 NASA picture of a day. 
 
 ```
-python3 fetch_nasa_images.py
+python3 fetch_nasa_images.py --nasa_token <YOUR_NASA_TOKEN>
 ```
 
 In order to set number of photos to grab - we can run script like this:
 
 ```
-python3 fetch_nasa_images.py --count XXX
+python3 fetch_nasa_images.py --nasa_token <YOUR_NASA_TOKEN> --count XXX
 ```
 
 
@@ -115,17 +118,25 @@ This script download Earth photos from EPIC web-service
 
 To run script enter command:
 ```
-python fetch_epic_images.py
+python3 fetch_epic_images.py --nasa_token <YOUR_NASA_TOKEN>
 ```
 
 ### `astro24bot.py`
 
 This script implements the logic of communication with Telegram
 
-`send_photo_to_channel(photo=None, text=None)`
+Pushing photo file to the Telegram channel realized in function:
 
-Being run without parameters - it will publish 1 random space photo to the Telegram channel.
+`send_photo_to_channel(chat_id, telegram_token, image_folder, photo_file=None, text=None)`
 
-+ Parameter `photo` - define file name to send into channel.
++ Parameter `chat_id` - define Telegram channel name to push photos;
 
-+ Parameter `text`  - define text to send short message to the channel.
++ Parameter `telegram_token` - define the Telegram API-key to communicate;
+
++ Parameter `image_folder` - define the image folder to store space photos;
+
++ Parameter `photo_file` -  define file name to send into the channel;
+
++ Parameter `text`  - define text to send short message to the channel;
+
+Just in case `photo_file` parameter is not defined, the random photo file from `image_folder` directory will be pushed into the Telegram channel.

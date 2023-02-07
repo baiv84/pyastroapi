@@ -13,15 +13,16 @@ def get_epic_photos(nasa_token, folder='images'):
     epic_url = f'https://api.nasa.gov/EPIC/api/natural/images/'
     response = requests.get(epic_url, params={'api_key': nasa_token})
     response.raise_for_status()
-    epics = response.json()
+    epic_photos = response.json()
 
-    for i, epic in enumerate(epics):
-        photo_identifier = epic['image']
-        photo_date, _ = epic['date'].split()
-        photo_date = photo_date.replace('-', '/')
-        epic_link = f'https://api.nasa.gov/EPIC/archive/natural/{photo_date}/png/{photo_identifier}.png'
-        filename = f'nasa_epic_{i}.png'
-        download_image(epic_link, folder, filename, params={'api_key': nasa_token})
+    for index, epic_photo in enumerate(epic_photos):
+        epic_photo_identifier = epic_photo['image']
+        epic_photo_date, _ = epic_photo['date'].split()
+        epic_photo_date = epic_photo_date.replace('-', '/')
+        epic_photo_link = f'https://api.nasa.gov/EPIC/archive/natural/{epic_photo_date}/png/{epic_photo_identifier}.png'
+        filename = f'nasa_epic_{index}.png'
+        download_image(epic_photo_link, folder,
+                       filename, params={'api_key': nasa_token})
 
 
 def main():
