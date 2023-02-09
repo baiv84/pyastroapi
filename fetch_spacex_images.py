@@ -1,7 +1,8 @@
 import os
 import requests
 import argparse
-from basic import download_image, get_file_extension
+from basic import download_image
+from basic import get_file_extension
 
 
 def get_launch_photo_urls(launch_id):

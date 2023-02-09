@@ -1,8 +1,11 @@
 import os
+import sys
 import time
 import random
+import requests
 import argparse
 from dotenv import load_dotenv
+from basic import validate_nasa_token
 from astro24bot import send_photo_to_channel
 from fetch_nasa_images import get_nasa_photos
 from fetch_epic_images import get_epic_photos
@@ -38,7 +41,12 @@ def main():
               'Check .env file for correctness\n')
         return
 
-    astro_photos = []
+    try:
+        validate_nasa_token(nasa_token)
+    except requests.exceptions.HTTPError:
+        print('NASA token value is incorrect.\n'
+              'Stop program execution')
+        sys.exit(1)
 
     parser = argparse.ArgumentParser(
         description='Space photo grabber'
@@ -47,6 +55,7 @@ def main():
     parser.add_argument('--period', default=4, help='Delay period in hours')
     args = parser.parse_args()
     update_period = int(args.period) * 3600
+    astro_photos = []
 
     while True:
         if len(astro_photos) == 0:

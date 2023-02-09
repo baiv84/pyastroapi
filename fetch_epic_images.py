@@ -1,15 +1,13 @@
 import os
+import sys
 import requests
 import argparse
 from basic import download_image
+from basic import validate_nasa_token
 
 
 def get_epic_photos(nasa_token, folder='images'):
     """Download EPIC photos"""
-    if not nasa_token:
-        print('Token is not set')
-        return
-
     epic_url = f'https://api.nasa.gov/EPIC/api/natural/images/'
     response = requests.get(epic_url, params={'api_key': nasa_token})
     response.raise_for_status()
@@ -37,6 +35,14 @@ def main():
     parser.add_argument('--nasa_token')
     parser.add_argument('--folder', default='images')
     args = parser.parse_args()
+
+    try:
+        validate_nasa_token(args.nasa_token)
+    except requests.exceptions.HTTPError:
+        print('NASA token value is incorrect.\n'
+              'Stop program execution')
+        sys.exit(1)
+
     get_epic_photos(args.nasa_token, args.folder)
 
 
